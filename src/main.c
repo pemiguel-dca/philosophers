@@ -6,7 +6,7 @@
 /*   By: pemiguel <pemiguel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 20:34:23 by pemiguel          #+#    #+#             */
-/*   Updated: 2023/02/07 14:47:46 by pemiguel         ###   ########.fr       */
+/*   Updated: 2023/02/12 15:49:51 by pemiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,7 @@ int	main(int argc, char *argv[])
 	}
 	else
 		requirements();
+	if (params.all_ate == 1)
+		printf(SATISFIED);
 	return (0);
 }

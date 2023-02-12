@@ -6,7 +6,7 @@
 /*   By: pemiguel <pemiguel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 16:16:02 by pemiguel          #+#    #+#             */
-/*   Updated: 2023/02/09 00:26:10 by pemiguel         ###   ########.fr       */
+/*   Updated: 2023/02/12 17:04:11 by pemiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ int	create_mutex(t_params *params)
 	while (++i < params->number_philo)
 		if (pthread_mutex_init(&params->forks[i], NULL))
 			return (1);
-	if (pthread_mutex_init(&params->writing, NULL))
+	if (pthread_mutex_init(&params->full, NULL))
+		return (1);
+	if (pthread_mutex_init(&params->add_ate, NULL))
 		return (1);
 	return (0);
 }
@@ -36,7 +38,7 @@ int	create_philos(t_params *params)
 		params->philo[i].x = i + 1;
 		params->philo[i].x_ate = 0;
 		params->philo[i].left_fork = i;
-		params->philo[i].right_fork = (i + 1) % params->number_philo;
+		params->philo[i].right_fork = i + 1 % params->number_philo;
 		params->philo[i].last_meal = time_ms();
 		params->philo[i].params = params;
 	}
@@ -49,7 +51,7 @@ int	create_params(t_params *params, char **argv)
 	params->time_to_die = ft_atoi(argv[2]);
 	params->time_to_eat = ft_atoi(argv[3]);
 	params->time_to_sleep = ft_atoi(argv[4]);
-	params->wrote = 0;
+	params->satisfied = 0;
 	if (argv[5])
 		params->number_must_eat = ft_atoi(argv[5]);
 	else

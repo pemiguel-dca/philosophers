@@ -6,7 +6,7 @@
 /*   By: pemiguel <pemiguel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 15:44:07 by pemiguel          #+#    #+#             */
-/*   Updated: 2023/02/09 00:33:46 by pemiguel         ###   ########.fr       */
+/*   Updated: 2023/02/12 16:59:22 by pemiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,36 +40,22 @@ void	*thread(void *philosophers)
 {
 	t_params	*params;
 	t_philo		*philo;
-	static int			done;
 
 	philo = (t_philo *)philosophers;
 	params = philo->params;
-	done = 0;
 	while(!params->died && !params->all_ate)
 	{
 		eats(philo);
-		usleep(100);
-		if (!params->all_ate && !done)
-		{
-			sleepy(params, philo->x);
-			act(params, THINKING, philo->x);
-		}
-		else
-		{
-			printf("%s",SATISFIED);
-			done = 1;
-			break ;
-		}
+		sleepy(params, philo->x);
+		act(params, THINKING, philo->x);
 	}
 	return (NULL);
 }
 
 void	died(t_params *params, t_philo *philo)
 {
-	static int	satisfied = 0;
 	int			i;
 
-	satisfied = 0;
 	while (!params->all_ate && !params->died)
 	{
 		i = -1;
@@ -79,12 +65,14 @@ void	died(t_params *params, t_philo *philo)
 			{
 				gone(params, philo[i].x);
 				params->died = 1;
-				return ;
 			}
-			usleep(100);//bastante importante
 			if (philo[i].x_ate == params->number_must_eat)
-				satisfied++;
-			if (satisfied == params->number_philo)
+			{
+				pthread_mutex_lock(&params->full);
+				params->satisfied++;
+				pthread_mutex_unlock(&params->full);
+			}
+			if (params->satisfied == params->number_philo)
 				params->all_ate = 1;
 		}
 	}
@@ -100,6 +88,9 @@ void	exit_p(t_params *params, t_philo *philo)
 	i = -1;
 	while (++i < params->number_philo)
 		pthread_mutex_destroy(&(params->forks[i]));
+	pthread_mutex_destroy(&(params->full));
+	pthread_mutex_destroy(&(params->add_ate));
+	free(params->philo);
 }
 
 int	start(t_params *params)
@@ -111,7 +102,7 @@ int	start(t_params *params)
 	philo = params->philo;
 	params->timestamp = time_ms();
 	while (++i < params->number_philo)
-		if (pthread_create(&philo->thread_x, NULL, &thread, &philo[i]))
+		if (pthread_create(&philo[i].thread_x, NULL, &thread, &philo[i]))
 			return (1);
 	died(params, philo);
 	exit_p(params, philo);

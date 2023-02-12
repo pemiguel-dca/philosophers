@@ -6,7 +6,7 @@
 /*   By: pemiguel <pemiguel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 20:34:52 by pemiguel          #+#    #+#             */
-/*   Updated: 2023/02/09 00:08:19 by pemiguel         ###   ########.fr       */
+/*   Updated: 2023/02/11 22:36:42 by pemiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,12 @@ typedef struct s_params
 	int					time_to_sleep;
 	int					number_must_eat;
 	int					all_ate;
-	int					wrote;
+	int					satisfied;
 	int					died;
 	suseconds_t			timestamp;
 	pthread_mutex_t		forks[250];
-	pthread_mutex_t		writing;
+	pthread_mutex_t		full;
+	pthread_mutex_t		add_ate;
 	struct s_philo		*philo;
 
 }		t_params;

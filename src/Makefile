@@ -12,7 +12,7 @@ NAME = philo
 all: $(NAME)
 
 $(NAME): $(OBJ_MAND)
-		cc $(CFLAGS) -g $(OBJ_MAND) -o $(NAME) -lpthread
+		cc $(CFLAGS) -fsanitize=thread -g $(OBJ_MAND) -o $(NAME) -lpthread
 
 clean:
 		rm -rf $(OBJ_MAND)
@@ -21,8 +21,5 @@ fclean: clean
 		rm -f $(NAME)
 
 re : fclean all
-
-run: all clean
-	./philo 5 400 100 50 2
 
 .PHONY: $(NAME)
