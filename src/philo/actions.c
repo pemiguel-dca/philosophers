@@ -6,7 +6,7 @@
 /*   By: pemiguel <pemiguel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 16:43:28 by pemiguel          #+#    #+#             */
-/*   Updated: 2023/02/08 21:48:48 by pemiguel         ###   ########.fr       */
+/*   Updated: 2023/02/12 23:22:15 by pemiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	sleepy(t_params *params, int philo)
 {
 	if (!params->died)
 	{
-		printf("%ld %d %s\n", time_diff(time_ms(), params->timestamp), philo, SLEEPING);
+		printf("%ld %d %s\n", time_diff(time_ms(),
+				params->timestamp), philo, SLEEPING);
 		usleep(params->time_to_sleep * 1000);
 	}
 	else
@@ -26,7 +27,8 @@ void	sleepy(t_params *params, int philo)
 void	act(t_params *params, char *wud, int philo)
 {
 	if (!params->died)
-		printf("%ld %d %s\n", time_diff(time_ms(), params->timestamp), philo, wud);
+		printf("%ld %d %s\n", time_diff(time_ms(),
+				params->timestamp), philo, wud);
 	else
 		return ;
 }

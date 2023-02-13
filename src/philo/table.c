@@ -6,34 +6,27 @@
 /*   By: pemiguel <pemiguel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 15:44:07 by pemiguel          #+#    #+#             */
-/*   Updated: 2023/02/12 16:59:22 by pemiguel         ###   ########.fr       */
+/*   Updated: 2023/02/12 23:51:14 by pemiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-/*
-This function show which philosophers is eating, to eat they need two forks, so
-you need to take those to forks out of the table, lock those forks with mutex lock, so that no other one uses it.
-It's importante to notice that the philosopher will take is left fork and is right the one on is
-index (n_philo) and the one adjacent to him
-*/
 
 void	eats(t_philo *philo)
 {
 	t_params	*params;
 
 	params = philo->params;
-	pthread_mutex_lock(&(params->forks[philo->left_fork]));
-	pthread_mutex_lock(&(params->forks[philo->right_fork]));
+	pthread_mutex_lock(&(params->fork[philo->left]));
+	pthread_mutex_lock(&(params->fork[philo->right]));
 	act(params, PICK_UP_FORK, philo->x);
 	act(params, PICK_UP_FORK, philo->x);
 	act(params, EATING, philo->x);
 	usleep(params->time_to_eat * 1000);
 	philo->last_meal = time_ms();
 	philo->x_ate++;
-	pthread_mutex_unlock(&(params->forks[philo->left_fork]));
-	pthread_mutex_unlock(&(params->forks[philo->right_fork]));
+	pthread_mutex_unlock(&(params->fork[philo->left]));
+	pthread_mutex_unlock(&(params->fork[philo->right]));
 }
 
 void	*thread(void *philosophers)
@@ -43,7 +36,7 @@ void	*thread(void *philosophers)
 
 	philo = (t_philo *)philosophers;
 	params = philo->params;
-	while(!params->died && !params->all_ate)
+	while (!params->died && !params->all_ate)
 	{
 		eats(philo);
 		sleepy(params, philo->x);
@@ -80,16 +73,15 @@ void	died(t_params *params, t_philo *philo)
 
 void	exit_p(t_params *params, t_philo *philo)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < params->number_philo)
 		pthread_join(philo[i].thread_x, NULL);
 	i = -1;
 	while (++i < params->number_philo)
-		pthread_mutex_destroy(&(params->forks[i]));
+		pthread_mutex_destroy(&(params->fork[i]));
 	pthread_mutex_destroy(&(params->full));
-	pthread_mutex_destroy(&(params->add_ate));
 	free(params->philo);
 }
 

@@ -4,7 +4,7 @@
 #       action
 
 CFLAGS = -Wall -Wextra -Werror
-MAND = actions.c basics.c create.c main.c table.c utils.c utils2.c
+MAND = actions.c basics.c create.c main.c table.c utils.c
 OBJ_MAND = $(MAND:.c=.o)
 
 NAME = philo

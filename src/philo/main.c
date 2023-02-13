@@ -6,7 +6,7 @@
 /*   By: pemiguel <pemiguel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 20:34:23 by pemiguel          #+#    #+#             */
-/*   Updated: 2023/02/12 15:49:51 by pemiguel         ###   ########.fr       */
+/*   Updated: 2023/02/12 23:13:42 by pemiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,13 @@ number_of_times_each_philosopher_must_eat
 int	main(int argc, char *argv[])
 {
 	t_params	params;
+
 	if ((argc == 5 || argc == 6)
 		&& !confirm_params(argv)
 		&& !create_params(&params, argv))
 	{
 		if (start(&params))
-		{
-			printf("error");
-			return (0);
-		}
+			printf("Error");
 	}
 	else
 		requirements();

@@ -6,7 +6,7 @@
 /*   By: pemiguel <pemiguel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 20:34:52 by pemiguel          #+#    #+#             */
-/*   Updated: 2023/02/11 22:36:42 by pemiguel         ###   ########.fr       */
+/*   Updated: 2023/02/12 23:23:18 by pemiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@
 # define THINKING "is thinking 🤔"
 # define DIED "died 💀"
 
-//struct
-
 typedef struct s_params
 {
 	int					number_philo;
@@ -39,19 +37,18 @@ typedef struct s_params
 	int					satisfied;
 	int					died;
 	suseconds_t			timestamp;
-	pthread_mutex_t		forks[250];
+	pthread_mutex_t		fork[250];
 	pthread_mutex_t		full;
-	pthread_mutex_t		add_ate;
 	struct s_philo		*philo;
 
 }		t_params;
 
-typedef	struct			s_philo
+typedef struct s_philo
 {
 	int					x;
 	int					x_ate;
-	int					left_fork;
-	int					right_fork;
+	int					left;
+	int					right;
 	suseconds_t			last_meal;
 	struct s_params		*params;
 	pthread_t			thread_x;
@@ -77,14 +74,11 @@ int			ft_isdigit(int arg);
 suseconds_t	time_diff(int act, int prev);
 suseconds_t	time_ms(void);
 
-//utils2
-int	ft_strcmp(const char *s1, const char *s2);
-
 //table
-void	eats(t_philo *philo);
-void	*thread(void *philosophers);
-void	died(t_params *params, t_philo *philo);
-void	exit_p(t_params *params, t_philo *philo);
-int		start(t_params *params);
+void		eats(t_philo *philo);
+void		*thread(void *philosophers);
+void		died(t_params *params, t_philo *philo);
+void		exit_p(t_params *params, t_philo *philo);
+int			start(t_params *params);
 
 #endif

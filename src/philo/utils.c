@@ -6,7 +6,7 @@
 /*   By: pemiguel <pemiguel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 20:42:06 by pemiguel          #+#    #+#             */
-/*   Updated: 2023/02/06 20:32:18 by pemiguel         ###   ########.fr       */
+/*   Updated: 2023/02/12 23:16:05 by pemiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ static int	ft_check_white_spaces(char *s)
 
 	i = 0;
 	while (s[i] == 32 || (s[i] >= 9 && s[i] <= 13))
-	{
 		i++;
-	}
 	return (i);
 }
 
