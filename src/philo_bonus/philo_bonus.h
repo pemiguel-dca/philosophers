@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   philo_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pemiguel <pemiguel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 20:34:52 by pemiguel          #+#    #+#             */
-/*   Updated: 2023/02/13 17:19:36 by pemiguel         ###   ########.fr       */
+/*   Updated: 2023/02/13 16:18:30 by pemiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILO_BONUS__H
+# define PHILO_BONUS__H
 
 # include <stdio.h>
 # include <pthread.h>
 # include <sys/time.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <fcntl.h>
+# include <semaphore.h>
+# include <sys/stat.h>
 
+# define SEM_FORK "Forks"
 # define SATISFIED "All philosophers have eaten 😌 \n"
 # define PICK_UP_FORK "has taken a fork 🥢"
 # define EATING "is eating 🍜"
@@ -37,9 +41,9 @@ typedef struct s_params
 	int					satisfied;
 	int					died;
 	suseconds_t			timestamp;
-	pthread_mutex_t		fork[250];
-	pthread_mutex_t		full;
-	pthread_mutex_t		checking;
+	sem_t				*sem_fork;
+	sem_t				*full;
+	sem_t				*checking;
 	struct s_philo		*philo;
 
 }		t_params;
@@ -48,11 +52,9 @@ typedef struct s_philo
 {
 	int					x;
 	int					x_ate;
-	int					left;
-	int					right;
 	suseconds_t			last_meal;
+	int					pid;
 	struct s_params		*params;
-	pthread_t			thread_x;
 }						t_philo;
 
 //actions
@@ -65,7 +67,7 @@ int			confirm_params(char **argv);
 void		requirements(void);
 
 //create
-int			create_mutex(t_params *params);
+int			create_sems(t_params *params);
 int			create_philos(t_params *params);
 int			create_params(t_params *params, char **argv);
 

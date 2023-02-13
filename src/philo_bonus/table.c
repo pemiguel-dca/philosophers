@@ -6,11 +6,11 @@
 /*   By: pemiguel <pemiguel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 15:44:07 by pemiguel          #+#    #+#             */
-/*   Updated: 2023/02/13 18:17:03 by pemiguel         ###   ########.fr       */
+/*   Updated: 2023/02/13 15:59:42 by pemiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 void	eats(t_philo *philo)
 {
@@ -23,10 +23,8 @@ void	eats(t_philo *philo)
 	act(params, PICK_UP_FORK, philo->x);
 	act(params, EATING, philo->x);
 	usleep(params->time_to_eat * 1000);
-	pthread_mutex_lock(&params->checking);
 	philo->last_meal = time_ms();
 	philo->x_ate++;
-	pthread_mutex_unlock(&params->checking);
 	pthread_mutex_unlock(&(params->fork[philo->left]));
 	pthread_mutex_unlock(&(params->fork[philo->right]));
 }
@@ -56,12 +54,14 @@ void	died(t_params *params, t_philo *philo)
 		i = -1;
 		while (++i < params->number_philo)
 		{
+			pthread_mutex_lock(&params->checking);
 			if (time_diff(time_ms(), philo[i].last_meal) > params->time_to_die)
 			{
 				gone(params, philo[i].x);
 				params->died = 1;
 				return ;
 			}
+			pthread_mutex_unlock(&params->checking);
 			if (philo[i].x_ate == params->number_must_eat)
 			{
 				pthread_mutex_lock(&params->full);
@@ -89,17 +89,12 @@ void	exit_p(t_params *params, t_philo *philo)
 	free(params->philo);
 }
 
-int	start(t_params *params)
+int	create_thread(t_philo	*philo)
 {
-	int		i;
-	t_philo	*philo;
+	pthread_t			thread_x;
 
-	i = -1;
-	philo = params->philo;
-	params->timestamp = time_ms();
-	while (++i < params->number_philo)
-		if (pthread_create(&philo[i].thread_x, NULL, &thread, &philo[i]))
-			return (1);
+	pthread_create(&thread_x, NULL, &thread, &philo);
+	pthread_join(thread_x, NULL);
 	died(params, philo);
 	exit_p(params, philo);
 	return (0);

@@ -12,7 +12,7 @@ NAME = philo
 all: $(NAME)
 
 $(NAME): $(OBJ_MAND)
-		cc $(CFLAGS) -g $(OBJ_MAND) -o $(NAME) -lpthread
+		cc $(CFLAGS) -g $(OBJ_MAND) -o $(NAME) -lpthread -lrt
 
 clean:
 		rm -rf $(OBJ_MAND)
