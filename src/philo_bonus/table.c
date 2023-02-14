@@ -6,7 +6,7 @@
 /*   By: pemiguel <pemiguel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 15:44:07 by pemiguel          #+#    #+#             */
-/*   Updated: 2023/02/13 15:59:42 by pemiguel         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:12:24 by pemiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	create_thread(t_philo	*philo)
 
 	pthread_create(&thread_x, NULL, &thread, &philo);
 	pthread_join(thread_x, NULL);
+	routine
 	died(params, philo);
 	exit_p(params, philo);
 	return (0);

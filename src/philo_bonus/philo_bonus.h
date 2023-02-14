@@ -6,7 +6,7 @@
 /*   By: pemiguel <pemiguel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 20:34:52 by pemiguel          #+#    #+#             */
-/*   Updated: 2023/02/13 16:18:30 by pemiguel         ###   ########.fr       */
+/*   Updated: 2023/02/14 14:51:22 by pemiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <sys/stat.h>
 
 # define SEM_FORK "Forks"
+# define SEM_FULL "Full"
+# define SEM_CHECKING "Checking"
 # define SATISFIED "All philosophers have eaten 😌 \n"
 # define PICK_UP_FORK "has taken a fork 🥢"
 # define EATING "is eating 🍜"
@@ -42,8 +44,8 @@ typedef struct s_params
 	int					died;
 	suseconds_t			timestamp;
 	sem_t				*sem_fork;
-	sem_t				*full;
-	sem_t				*checking;
+	sem_t				*sem_full;
+	sem_t				*sem_checking;
 	struct s_philo		*philo;
 
 }		t_params;
