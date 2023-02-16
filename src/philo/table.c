@@ -6,7 +6,7 @@
 /*   By: pemiguel <pemiguel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 15:44:07 by pemiguel          #+#    #+#             */
-/*   Updated: 2023/02/16 14:21:41 by pemiguel         ###   ########.fr       */
+/*   Updated: 2023/02/16 14:39:21 by pemiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	eats(t_philo *philo)
 	pthread_mutex_lock(&(params->fork[philo->right]));
 	act(params, PICK_UP_FORK, philo->x);
 	act(params, PICK_UP_FORK, philo->x);
-	pthread_mutex_lock(&params->checking);
 	act(params, EATING, philo->x);
+	pthread_mutex_lock(&params->checking);
 	usleep(params->time_to_eat * 1000);
 	philo->last_meal = time_ms();
 	philo->x_ate++;
@@ -61,6 +61,7 @@ void	died(t_params *params, t_philo *philo)
 			{
 				params->died = 1;
 				gone(params, philo[i].x);
+				pthread_mutex_unlock(&params->checking);
 				return ;
 			}
 			pthread_mutex_unlock(&params->checking);
@@ -77,6 +78,8 @@ void	exit_p(t_params *params, t_philo *philo)
 	int	i;
 
 	i = -1;
+	if (params->died)
+		pthread_mutex_unlock(&params->printing);
 	while (++i < params->number_philo)
 		pthread_join(philo[i].thread_x, NULL);
 	i = -1;
