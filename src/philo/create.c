@@ -6,7 +6,7 @@
 /*   By: pemiguel <pemiguel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 16:16:02 by pemiguel          #+#    #+#             */
-/*   Updated: 2023/02/13 15:35:59 by pemiguel         ###   ########.fr       */
+/*   Updated: 2023/02/15 18:36:48 by pemiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	create_mutex(t_params *params)
 		return (1);
 	if (pthread_mutex_init(&params->checking, NULL))
 		return (1);
+	if (pthread_mutex_init(&params->gone, NULL))
+		return (1);
 	return (0);
 }
 
@@ -37,8 +39,16 @@ int	create_philos(t_params *params)
 	{
 		params->philo[i].x = i + 1;
 		params->philo[i].x_ate = 0;
-		params->philo[i].left = i;
-		params->philo[i].right = i + 1 % params->number_philo;
+		if (i != params->number_philo - 1)
+		{
+			params->philo[i].left = i;
+			params->philo[i].right = (i + 1) % params->number_philo;
+		}
+		else
+		{
+			params->philo[i].left = (i + 1) % params->number_philo;;
+			params->philo[i].right = i;
+		}
 		params->philo[i].last_meal = time_ms();
 		params->philo[i].params = params;
 	}

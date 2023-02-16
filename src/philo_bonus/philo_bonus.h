@@ -6,7 +6,7 @@
 /*   By: pemiguel <pemiguel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 20:34:52 by pemiguel          #+#    #+#             */
-/*   Updated: 2023/02/14 14:51:22 by pemiguel         ###   ########.fr       */
+/*   Updated: 2023/02/15 17:29:35 by pemiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,11 @@
 # include <fcntl.h>
 # include <semaphore.h>
 # include <sys/stat.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <signal.h>
 
+# define SEM_SATISFIED "Satisfied"
 # define SEM_FORK "Forks"
 # define SEM_FULL "Full"
 # define SEM_CHECKING "Checking"
@@ -41,10 +45,11 @@ typedef struct s_params
 	int					number_must_eat;
 	int					all_ate;
 	int					satisfied;
+	sem_t				*sem_satisfied;
 	int					died;
 	suseconds_t			timestamp;
 	sem_t				*sem_fork;
-	sem_t				*sem_full;
+	sem_t				*sem_eating;
 	sem_t				*sem_checking;
 	struct s_philo		*philo;
 
@@ -81,8 +86,8 @@ suseconds_t	time_ms(void);
 
 //table
 void		eats(t_philo *philo);
-void		*thread(void *philosophers);
-void		died(t_params *params, t_philo *philo);
+void		routine(t_philo *philosophers);
+void		*thread_dead(void *arg);
 void		exit_p(t_params *params, t_philo *philo);
 int			start(t_params *params);
 

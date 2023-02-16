@@ -6,7 +6,7 @@
 /*   By: pemiguel <pemiguel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 16:16:02 by pemiguel          #+#    #+#             */
-/*   Updated: 2023/02/14 15:10:17 by pemiguel         ###   ########.fr       */
+/*   Updated: 2023/02/15 17:45:15 by pemiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,18 @@
 int	create_sems(t_params *params)
 {
 	sem_unlink(SEM_FORK);
-	sem_unlink(SEM_FULL);
 	sem_unlink(SEM_CHECKING);
-	params->sem_fork = sem_open(SEM_FORK, O_CREAT, S_IRWXG, params->number_philo);
-	if (params-> == SEM_FAILED)
+	sem_unlink(SEM_SATISFIED);
+	params->sem_fork = sem_open(SEM_FORK, O_CREAT, S_IRWXG, params->number_philo / 2);
+	if (params->sem_fork == SEM_FAILED)
 	{
 		printf("Failed to create the semaphore for the forks.\n");
 		return (1);
 	}
-	params->sem_full = sem_open(SEM_FULL, O_CREAT, S_IRWXG, 1);
+	params->sem_satisfied = sem_open(SEM_SATISFIED, O_CREAT, S_IRWXG, params->number_must_eat);
 	params->sem_checking = sem_open(SEM_CHECKING, O_CREAT, S_IRWXG, 1);
-	if (params->sem_full == SEM_FAILED || params->sem_checking == SEM_FAILED)
+	params->sem_eating = sem_open("Eating", O_CREAT, S_IRWXG, 1);
+	if (params->sem_satisfied == SEM_FAILED || params->sem_checking == SEM_FAILED)
 	{
 		printf("Failed to create a semaphore.\n");
 		return (1);
@@ -45,11 +46,6 @@ int	create_philos(t_params *params)
 		params->philo[i].x_ate = 0;
 		params->philo[i].last_meal = time_ms();
 		params->philo[i].params = params;
-		params->philo[i].pid = fork();
-
-		 // child
-		if (params->philo[i].pid == 0)
-			//associate a process to its respective thread
 	}
 	return (0);
 }

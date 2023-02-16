@@ -6,7 +6,7 @@
 /*   By: pemiguel <pemiguel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 20:34:52 by pemiguel          #+#    #+#             */
-/*   Updated: 2023/02/13 17:19:36 by pemiguel         ###   ########.fr       */
+/*   Updated: 2023/02/15 18:21:23 by pemiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define SATISFIED "All philosophers have eaten 😌 \n"
-# define PICK_UP_FORK "has taken a fork 🥢"
-# define EATING "is eating 🍜"
-# define SLEEPING "is sleeping 😴"
-# define THINKING "is thinking 🤔"
-# define DIED "died 💀"
+# define SATISFIED "All philosophers have eaten  \n"
+# define PICK_UP_FORK "has taken a fork"
+# define EATING "is eating"
+# define SLEEPING "is sleeping"
+# define THINKING "is thinking"
+# define DIED "died"
 
 typedef struct s_params
 {
@@ -40,6 +40,7 @@ typedef struct s_params
 	pthread_mutex_t		fork[250];
 	pthread_mutex_t		full;
 	pthread_mutex_t		checking;
+	pthread_mutex_t		gone;
 	struct s_philo		*philo;
 
 }		t_params;
