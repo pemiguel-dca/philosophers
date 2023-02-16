@@ -20,6 +20,9 @@ clean:
 fclean: clean
 		rm -f $(NAME)
 
-re : fclean all
+re: fclean all
+
+run: all clean
+	./$(NAME) 3 200 100 50 3
 
 .PHONY: $(NAME)

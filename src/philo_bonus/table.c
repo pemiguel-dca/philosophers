@@ -6,7 +6,7 @@
 /*   By: pemiguel <pemiguel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 15:44:07 by pemiguel          #+#    #+#             */
-/*   Updated: 2023/02/15 18:03:17 by pemiguel         ###   ########.fr       */
+/*   Updated: 2023/02/16 12:42:50 by pemiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ void	*thread_dead(void *arg)
 				exit (1);
 			}
 			if (params->philo[i].x_ate == params->number_must_eat)
+			{
 				params->satisfied++;
+				
+			}
 			if (params->satisfied == params->number_philo)
 				params->all_ate = 1;
 			sem_post(params->sem_checking);

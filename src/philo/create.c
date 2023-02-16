@@ -6,7 +6,7 @@
 /*   By: pemiguel <pemiguel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 16:16:02 by pemiguel          #+#    #+#             */
-/*   Updated: 2023/02/15 18:36:48 by pemiguel         ###   ########.fr       */
+/*   Updated: 2023/02/16 12:54:21 by pemiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,9 @@ int	create_mutex(t_params *params)
 	while (++i < params->number_philo)
 		if (pthread_mutex_init(&params->fork[i], NULL))
 			return (1);
-	if (pthread_mutex_init(&params->full, NULL))
-		return (1);
 	if (pthread_mutex_init(&params->checking, NULL))
 		return (1);
-	if (pthread_mutex_init(&params->gone, NULL))
+	if (pthread_mutex_init(&params->printing, NULL))
 		return (1);
 	return (0);
 }
