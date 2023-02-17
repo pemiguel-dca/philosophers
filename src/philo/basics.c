@@ -6,7 +6,7 @@
 /*   By: pemiguel <pemiguel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 21:08:11 by pemiguel          #+#    #+#             */
-/*   Updated: 2023/02/12 23:43:08 by pemiguel         ###   ########.fr       */
+/*   Updated: 2023/02/17 18:14:01 by pemiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,5 @@ void	requirements(void)
 	printf("[time_to_sleep]\n[number_of_philosophers_that_must_eat]\n");
 	printf("⛔ WARNING ⛔\n");
 	printf("If any input is nor a digit or an unsigned int, and");
-	printf(" number_of_philosophers > 1, you will se this message again :)\n");
+	printf(" number_of_philosophers > 0, you will se this message again :)\n");
 }
