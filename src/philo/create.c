@@ -6,7 +6,7 @@
 /*   By: pemiguel <pemiguel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 16:16:02 by pemiguel          #+#    #+#             */
-/*   Updated: 2023/02/17 17:22:19 by pemiguel         ###   ########.fr       */
+/*   Updated: 2023/02/17 18:03:36 by pemiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	create_philos(t_params *params)
 		}
 		else
 		{
-			params->philo[i].left = (i + 1) % params->number_philo;;
+			params->philo[i].left = (i + 1) % params->number_philo;
 			params->philo[i].right = i;
 		}
 		params->philo[i].done = 0;

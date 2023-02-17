@@ -6,7 +6,7 @@
 /*   By: pemiguel <pemiguel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 15:44:07 by pemiguel          #+#    #+#             */
-/*   Updated: 2023/02/17 17:38:11 by pemiguel         ###   ########.fr       */
+/*   Updated: 2023/02/17 18:03:23 by pemiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	*thread(void *philosophers)
 
 	philo = (t_philo *)philosophers;
 	params = philo->params;
-	while (!params->died && !params->all_ate && philo->done == 0 && params->number_philo > 1)
+	while (!params->died && !params->all_ate
+		&& philo->done == 0 && params->number_philo > 1)
 	{
 		eats(philo);
 		sleepy(params, philo->x);
@@ -50,6 +51,7 @@ void	*thread(void *philosophers)
 void	died(t_params *params, t_philo *philo)
 {
 	int			i;
+
 	while (!params->all_ate && !params->died)
 	{
 		i = -1;

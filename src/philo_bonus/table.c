@@ -6,7 +6,7 @@
 /*   By: pemiguel <pemiguel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 15:44:07 by pemiguel          #+#    #+#             */
-/*   Updated: 2023/02/16 12:42:50 by pemiguel         ###   ########.fr       */
+/*   Updated: 2023/02/17 17:52:15 by pemiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void	eats(t_philo *philo)
 	act(params, PICK_UP_FORK, philo->x);
 	act(params, PICK_UP_FORK, philo->x);
 	act(params, EATING, philo->x);
-	usleep(params->time_to_eat * 1000);
 	sem_wait(params->sem_checking);
 	philo->last_meal = time_ms();
-	sem_post(params->sem_checking);
 	philo->x_ate++;
+	sem_post(params->sem_checking);
+	usleep(params->time_to_eat * 1000);
 	sem_post(params->sem_fork);
 }
 
@@ -35,7 +35,6 @@ void	routine(t_philo *philo)
 	pthread_t	death_thread;
 
 	params = philo->params;
-	philo->last_meal = time_ms();
 	pthread_create(&death_thread, NULL, &thread_dead, (void *)params);
 	while (!params->died && !params->all_ate)
 	{
@@ -68,10 +67,7 @@ void	*thread_dead(void *arg)
 				exit (1);
 			}
 			if (params->philo[i].x_ate == params->number_must_eat)
-			{
 				params->satisfied++;
-				
-			}
 			if (params->satisfied == params->number_philo)
 				params->all_ate = 1;
 			sem_post(params->sem_checking);
