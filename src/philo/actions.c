@@ -6,7 +6,7 @@
 /*   By: pemiguel <pemiguel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 16:43:28 by pemiguel          #+#    #+#             */
-/*   Updated: 2023/02/16 14:38:52 by pemiguel         ###   ########.fr       */
+/*   Updated: 2023/02/17 17:35:37 by pemiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,5 @@ void	gone(t_params *params, int philo)
 {
 	pthread_mutex_lock(&params->printing);
 	printf("%ld %d %s\n", time_diff(time_ms(), params->timestamp), philo, DIED);
+	pthread_mutex_unlock(&params->printing);
 }

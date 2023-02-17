@@ -12,7 +12,7 @@ NAME = philo
 all: $(NAME)
 
 $(NAME): $(OBJ_MAND)
-		cc $(CFLAGS) -g -fsanitize=thread $(OBJ_MAND) -o $(NAME) -lpthread
+		cc $(CFLAGS) -g $(OBJ_MAND) -o $(NAME) -lpthread
 
 clean:
 		rm -rf $(OBJ_MAND)
@@ -23,6 +23,6 @@ fclean: clean
 re: fclean all
 
 run: all clean
-	./$(NAME) 3 200 100 50 3
+	./philo 7 800 200 200 5 | grep "is eating" | wc -l
 
 .PHONY: $(NAME)

@@ -6,7 +6,7 @@
 /*   By: pemiguel <pemiguel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/29 20:34:52 by pemiguel          #+#    #+#             */
-/*   Updated: 2023/02/16 12:57:22 by pemiguel         ###   ########.fr       */
+/*   Updated: 2023/02/17 17:17:52 by pemiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_philo
 	int					x_ate;
 	int					left;
 	int					right;
+	int					done;
 	suseconds_t			last_meal;
 	struct s_params		*params;
 	pthread_t			thread_x;
